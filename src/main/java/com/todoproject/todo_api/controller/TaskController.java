@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.todoproject.todo_api.model.Task;
 import com.todoproject.todo_api.service.TaskService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -30,12 +33,12 @@ public class TaskController {
     }
 
     @PostMapping
-    public Task createTask(@RequestBody Task task) {
+    public Task createTask(@Valid @RequestBody Task task) {
         return taskService.createTask(task);
     }
 
     @PutMapping("/{id}")
-    public Task updateTask(@PathVariable Long id, @RequestBody Task task) {
+    public Task updateTask(@PathVariable Long id, @Valid @RequestBody Task task) {
         // TODO: process PUT request
 
         return taskService.updateTask(id, task);
