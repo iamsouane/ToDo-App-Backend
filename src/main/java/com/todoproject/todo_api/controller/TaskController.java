@@ -2,20 +2,14 @@ package com.todoproject.todo_api.controller;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.todoproject.todo_api.model.Task;
 import com.todoproject.todo_api.service.TaskService;
 
 import jakarta.validation.Valid;
-
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/tasks")
@@ -27,25 +21,41 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+    // GET ALL TASKS
     @GetMapping
-    public List<Task> getAllTasks() {
-        return taskService.getAllTasks();
+    public ResponseEntity<List<Task>> getAllTasks() {
+        List<Task> tasks = taskService.getAllTasks();
+        return ResponseEntity.ok(tasks);
     }
 
+    // CREATE TASK
     @PostMapping
-    public Task createTask(@Valid @RequestBody Task task) {
-        return taskService.createTask(task);
+    public ResponseEntity<Task> createTask(@Valid @RequestBody Task task) {
+
+        Task savedTask = taskService.createTask(task);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(savedTask);
     }
 
+    // UPDATE TASK
     @PutMapping("/{id}")
-    public Task updateTask(@PathVariable Long id, @Valid @RequestBody Task task) {
-        // TODO: process PUT request
+    public ResponseEntity<Task> updateTask(
+            @PathVariable Long id,
+            @Valid @RequestBody Task task) {
 
-        return taskService.updateTask(id, task);
+        Task updatedTask = taskService.updateTask(id, task);
+
+        return ResponseEntity.ok(updatedTask);
     }
 
+    // DELETE TASK
     @DeleteMapping("/{id}")
-    public void deleteTask(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+
         taskService.deleteTask(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
