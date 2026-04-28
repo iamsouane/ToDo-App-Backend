@@ -1,7 +1,3 @@
-Parfait 👍 voici ton **README.md complet, propre et prêt à coller directement dans GitHub** :
-
----
-
 ````md
 # 🚀 ToDo App Backend API
 
