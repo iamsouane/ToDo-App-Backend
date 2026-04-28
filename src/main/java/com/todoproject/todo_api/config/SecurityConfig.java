@@ -38,7 +38,7 @@ public class SecurityConfig {
                                                 SessionCreationPolicy.STATELESS))
 
                                 .authorizeHttpRequests(auth -> auth
-                                                .requestMatchers("/auth/**")
+                                                .requestMatchers("/", "/auth/**")
                                                 .permitAll()
 
                                                 .requestMatchers("/tasks/**")
